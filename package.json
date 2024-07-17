@@ -1,0 +1,9 @@
+{
+  "name": "twitter-post",
+  "version": "1.0.0",
+  "main": "post-tweet.js",
+  "dependencies": {
+    "twitter-lite": "^1.1.0",
+    "node-fetch": "^2.6.1"
+  }
+}
