@@ -1,4 +1,4 @@
-const Twit = require('twit');
+const { TwitterApi } = require('twitter-api-v2');
 const fetch = require('node-fetch');
 
 async function fetchBTCPrice() {
@@ -13,11 +13,11 @@ async function fetchBTCPrice() {
 }
 
 async function postTweet() {
-    const client = new Twit({
-        consumer_key: process.env.TWITTER_API_KEY,
-        consumer_secret: process.env.TWITTER_API_SECRET_KEY,
-        access_token: process.env.TWITTER_ACCESS_TOKEN,
-        access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+    const client = new TwitterApi({
+        appKey: process.env.TWITTER_API_KEY,
+        appSecret: process.env.TWITTER_API_SECRET_KEY,
+        accessToken: process.env.TWITTER_ACCESS_TOKEN,
+        accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
     });
 
     try {
@@ -32,15 +32,10 @@ async function postTweet() {
 
         console.log('Posting tweet:', status);
 
-        client.post('statuses/update', { status }, function (error, data, response) {
-            if (error) {
-                console.error('Error posting tweet:', error);
-            } else {
-                console.log('Tweet posted successfully:', data);
-            }
-        });
+        await client.v2.tweet(status);
+        console.log('Tweet posted successfully');
     } catch (error) {
-        console.error('Error in postTweet function:', error);
+        console.error('Error posting tweet:', error);
     }
 }
 
